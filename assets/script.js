@@ -5,11 +5,12 @@ $(document).ready(function () {
 
     searchBtn.on("click", function (){
         var newEntry = ($("input").val());
-        console.log(newEntry);
-        var newLiItem = $("<li></li>");
+        var newLiItem = $("<li>");
         newLiItem.addClass("list-group-item");
-        $(".list-group list-group-flush").append(newLiItem)
-        newLiItem.append(newEntry);
+        newLiItem.text(newEntry);
+        $("#place").append(newLiItem);
+       
+        
         
 
        
