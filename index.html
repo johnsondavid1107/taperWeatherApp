@@ -30,14 +30,14 @@
 
                     <div class="card-body">
                         <h5 class="card-title">Search for a City:</h5>
-                        <input type="text">
+                        <input class="inputF" type="text">
                         <a href="#" class="btn btn-primary searchBtn"><i class="fas fa-search"></i></a>
 
                     </div>
 
                     <div class="card" style="width: 18rem;">
                         <ul class="list-group list-group-flush" id="place">
-                            <li class="list-group-item"></li>
+                            
                         
                         </ul>
                     </div>
@@ -50,13 +50,14 @@
 
                     <div class="card" style="width: 50rem;">
                         <div class="weatherData">
-                            <h1>City</h1>
-                            <ol>
-                                <li>1</li>
-                                <li>2</li>
-                                <li>3</li>
-                                <li>4</li>
-                            </ol>
+                            <h1 class="city">City</h1>
+                            <ul>
+                                <p class="temp"></p>
+                                <p class="humidity"></p>
+                                <p class="windS"></p>
+                                <p class="uVI"></p>
+                                
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -103,6 +104,7 @@
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="assets/moment.js"></script>
     <script src="assets/script.js"></script>
 </body>
 
