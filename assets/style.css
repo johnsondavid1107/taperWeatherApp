@@ -16,3 +16,21 @@
 .card {
     background-color: ghostwhite;
 }
+
+
+.badge {
+    font-size: 1em;
+}
+
+
+.forecast{
+    margin-right: 600px;
+}
+
+.data {
+    margin: 10px;
+}
+
+/* green badge badge-success 
+   red badge badge-danger
+   yellow  badge badge-warning*/
