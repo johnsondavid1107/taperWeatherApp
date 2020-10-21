@@ -63,18 +63,32 @@ $(document).ready(function () {
 
                 console.log(uvIndex);
 
-                var fiveDayUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + appID;
+                var fiveDayUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,alerts&appid=" + appID;
 
                 $.ajax({
                     url: fiveDayUrl,
                     method: "GET"
                 }).then(function (response) {
-                    var tempFiveDay = response.list[0].main.temp;
 
-                    var newDiv = $("<div>");
-                    newDiv.addClass("card bg-primary text-white text-center p-3 data");
-                    newDiv.text(date +" " + " Tempeture " + tempFiveDay);
-                    $(".forecast").append(newDiv);
+
+                    for (var i = 0; i < 5; i++) {
+                        var fiveDayTemp = (response.daily[i].temp.max - 273.15) * 1.80 + 32;
+                        date = (moment().add(i,'day').format("L"));
+
+                        $("#" + i).html(date + "<br>" + "Tempeture: " + fiveDayTemp.toFixed(0) + "°" + "<br>" + "Humidity: " + response.daily[i].humidity + "%");
+                        // $(".fiveDayDate").each()
+                        // $(".fiveDayDate").text(date);
+                    }
+
+                    // var fiveDayImgTag = $("<img>");
+                    // fiveDayImgTag.attr("src",imgUrl);
+
+                    var fiveDayContent = $(".fiveDay");
+                    fiveDayContent.addClass("card bg-primary text-white text-center p-3 data");
+                    $(".fiveDayDate").text();
+                    // $(".fiveDayDate").append(fiveDayImgTag);
+
+
 
                     console.log(response)
                 })
