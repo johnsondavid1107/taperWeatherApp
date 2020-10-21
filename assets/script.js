@@ -13,7 +13,6 @@ $(document).ready(function () {
         newLiItem.text(newEntry);
         $("#place").prepend(newLiItem);
 
-        console.log(cityName);
         var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + appID;
         $("input").val("");
 
@@ -22,6 +21,8 @@ $(document).ready(function () {
             method: "GET"
         }).then(function (response) {
             var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+            var humidity = response.main.humidity;
+            var windS = response.wind.speed;
             var img = response.weather[0].icon;
             var imgTag = $("<img>");
             var imgUrl = "http://openweathermap.org/img/wn/" + img + "@2x.png";
@@ -33,15 +34,12 @@ $(document).ready(function () {
             $(".city").text(cityName + " " + " " + "(" + date + ")");
             $(".city").append(imgTag);
             $(".temp").text("Current Tempeture: " + tempF.toFixed(0) + "°");
-            $(".humidity").text("Humidity: " + response.main.humidity + "%");
-            $(".windS").text("Wind Speed: " + response.wind.speed + "m/s");
-
+            $(".humidity").text("Humidity: " + humidity + "%");
+            $(".windS").text("Wind Speed: " + windS + "m/s");
 
             var lat = response.coord.lat;
             var lon = response.coord.lon;
             var uviURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + appID;
-
-
 
             $.ajax({
                 url: uviURL,
@@ -69,15 +67,19 @@ $(document).ready(function () {
                     url: fiveDayUrl,
                     method: "GET"
                 }).then(function (response) {
-
-
+var simplifiedFiveDayForecast = []
                     for (var i = 0; i < 5; i++) {
+                        var oneDayForecast = {}
                         var fiveDayTemp = (response.daily[i].temp.max - 273.15) * 1.80 + 32;
-                        date = (moment().add(i,'day').format("L"));
+                        date = (moment().add(i, 'day').format("L"));
 
                         $("#" + i).html(date + "<br>" + "Tempeture: " + fiveDayTemp.toFixed(0) + "°" + "<br>" + "Humidity: " + response.daily[i].humidity + "%");
                         // $(".fiveDayDate").each()
                         // $(".fiveDayDate").text(date);
+                    oneDayForecast.fiveDayTemp = fiveDayTemp
+                    oneDayForecast.date = date
+                    oneDayForecast.humidity = response.daily[i].humidity
+                    simplifiedFiveDayForecast.push(oneDayForecast);
                     }
 
                     // var fiveDayImgTag = $("<img>");
@@ -88,29 +90,41 @@ $(document).ready(function () {
                     $(".fiveDayDate").text();
                     // $(".fiveDayDate").append(fiveDayImgTag);
 
+                    // console.log(response)
+
+                    var history = {
+                        city: cityName,
+                        tempeture: tempF,
+                        humidity: humidity,
+                        windS: windS,
+                        uvIndex: uvIndex,
+                        fiveDayForecast: simplifiedFiveDayForecast
+
+                    }
 
 
-                    console.log(response)
+                    localStorage.setItem("History", JSON.stringify(history));
+
+
+                    console.log(history);
                 })
-
-
-
 
             });
 
-
-
         });
-
-
 
     });
 
+    var lastCity = JSON.parse(localStorage.getItem("History"));
+
+    // $(".city").text(lastCity);
+
+    console.log(lastCity);
+    // console.log(lastCity.city);
 
 
 
-
-
+///Paolo Onclick the list element 
 
 
 
