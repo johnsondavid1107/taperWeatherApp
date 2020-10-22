@@ -3,7 +3,7 @@ $(document).ready(function () {
     var searchBtn = $(".searchBtn");
     var date = (moment().format("L"));
 
-    searchBtn.on("click", function () {
+    searchBtn.on("click", function process() {
         var appID = "6505ade685218bab7b6f73f294ad0301";
         var cityName = $(".inputF").val();
 
@@ -67,19 +67,24 @@ $(document).ready(function () {
                     url: fiveDayUrl,
                     method: "GET"
                 }).then(function (response) {
-var simplifiedFiveDayForecast = []
+                    var simplifiedFiveDayForecast = []
                     for (var i = 0; i < 5; i++) {
                         var oneDayForecast = {}
                         var fiveDayTemp = (response.daily[i].temp.max - 273.15) * 1.80 + 32;
+                        var fiveDayIcon = response.daily[i].weather[0].icon;
+                        var fiveImgTag = $("<img>");
+                        var fiveImgUrl = "http://openweathermap.org/img/wn/" + fiveDayIcon + "@2x.png";
                         date = (moment().add(i, 'day').format("L"));
+                    
 
-                        $("#" + i).html(date + "<br>" + "Tempeture: " + fiveDayTemp.toFixed(0) + "°" + "<br>" + "Humidity: " + response.daily[i].humidity + "%");
-                        // $(".fiveDayDate").each()
-                        // $(".fiveDayDate").text(date);
-                    oneDayForecast.fiveDayTemp = fiveDayTemp
-                    oneDayForecast.date = date
-                    oneDayForecast.humidity = response.daily[i].humidity
-                    simplifiedFiveDayForecast.push(oneDayForecast);
+                        $("#" + i).html(date + "<br>" + "Tempeture: " + fiveDayTemp.toFixed(0) + "°" + "<br>" + "Humidity: " + response.daily[i].humidity + "%" + "<br>");
+                        fiveImgTag.attr("src", fiveImgUrl);
+                        $("#" + i).append(fiveImgTag);
+                        console.log(fiveImgUrl);
+                        oneDayForecast.fiveDayTemp = fiveDayTemp
+                        oneDayForecast.date = date
+                        oneDayForecast.humidity = response.daily[i].humidity
+                        simplifiedFiveDayForecast.push(oneDayForecast);
                     }
 
                     // var fiveDayImgTag = $("<img>");
@@ -106,7 +111,7 @@ var simplifiedFiveDayForecast = []
                     localStorage.setItem("History", JSON.stringify(history));
 
 
-                    console.log(history);
+                    console.log(history.humidity);
                 })
 
             });
@@ -119,12 +124,18 @@ var simplifiedFiveDayForecast = []
 
     // $(".city").text(lastCity);
 
-    console.log(lastCity);
+    console.log(lastCity.humidity);
     // console.log(lastCity.city);
 
+    $("body").on("click", function () {
+        if ($(this) == $("li"));
+        console.log("This worked");
+    
+    });
 
 
-///Paolo Onclick the list element 
+
+    ///Paolo Onclick the list element 
 
 
 
