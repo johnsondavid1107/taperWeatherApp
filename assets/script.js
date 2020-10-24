@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     var searchBtn = $(".searchBtn");
     var date = (moment().format("L"));
+    console.log(date);
     var appID = "6505ade685218bab7b6f73f294ad0301";
 
     searchBtn.on("click", function process() {
@@ -10,9 +11,12 @@ $(document).ready(function () {
 
         var newEntry = ($(".inputF").val());
         var newLiItem = $("<li>");
-        newLiItem.addClass("list-group-item");
+        newLiItem.addClass("list-group-item superHover");
+        newLiItem.attr("id", "doIT");
         newLiItem.text(newEntry);
         $("#place").prepend(newLiItem);
+        $(".city").text(cityName + " " + " " + "(" + date + ")");
+        console.log(date);
 
         var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + appID;
         $("input").val("");
@@ -31,8 +35,9 @@ $(document).ready(function () {
             console.log(imgTag);
             console.log(img);
             console.log(response);
+            console.log(date);
 
-            $(".city").text(cityName + " " + " " + "(" + date + ")");
+            
             $(".city").append(imgTag);
             $(".temp").text("Current Tempeture: " + tempF.toFixed(0) + "°");
             $(".humidity").text("Humidity: " + humidity + "%");
@@ -47,20 +52,15 @@ $(document).ready(function () {
                 method: "GET"
             }).then(function (response) {
                 var uvIndex = response.value
-                $(".uVI").text("UV Index: " + uvIndex);
-                console.log(response.value);
+                $("#colorChange").text("UV Index: " + uvIndex);
 
                 if (uvIndex < 3) {
-                    $(".uVI").addClass("badge badge-success")
+                    $("#colorChange").attr("class", "badge badge-success")
                 } else if (uvIndex > 3 && uvIndex < 8) {
-                    $(".uVI").addClass("badge badge-warning")
+                    $("#colorChange").attr("class", "badge badge-warning")
                 } else {
-                    $(".uVI").addClass("badge badge-danger")
+                    $("#colorChange").attr("class", "badge badge-danger")
                 }
-
-                console.log($(".uVI").val());
-
-                console.log(uvIndex);
 
                 var fiveDayUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,alerts&appid=" + appID;
 
@@ -69,7 +69,7 @@ $(document).ready(function () {
                     method: "GET"
                 }).then(function (response) {
                     var simplifiedFiveDayForecast = []
-                    for (var i = 0; i < 5; i++) {
+                    for (var i = 1; i < 6; i++) {
                         var oneDayForecast = {}
                         var fiveDayTemp = (response.daily[i].temp.max - 273.15) * 1.80 + 32;
                         var fiveDayIcon = response.daily[i].weather[0].icon;
@@ -85,6 +85,7 @@ $(document).ready(function () {
                         oneDayForecast.fiveDayTemp = fiveDayTemp
                         oneDayForecast.date = date
                         oneDayForecast.humidity = response.daily[i].humidity
+                        oneDayForecast.icon = fiveDayIcon;
                         simplifiedFiveDayForecast.push(oneDayForecast);
                     }
 
@@ -122,17 +123,40 @@ $(document).ready(function () {
     });
 
     var lastCity = JSON.parse(localStorage.getItem("History"));
+    console.log(lastCity);
 
-    //can this be a function?  or do I need to set every element to text.
+    $(".city").html("The last searched city was: " + "<br>" + lastCity.city + "<br>" +" on " + date);
 
-    $(".city").text(lastCity.city);
-    // $(".city").append(imgTag);
     $(".temp").text("Current Tempeture: " + lastCity.temperture.toFixed(0) + "°");
     $(".humidity").text("Humidity: " + lastCity.humidity + "%");
     $(".windS").text("Wind Speed: " + lastCity.windS + "m/s");
-    $(".uVI").text("UVI Index: " + lastCity.uvIndex)
+    $("#colorChange").text("UVI Index: " + lastCity.uvIndex)
+
+    if (lastCity.uvIndex < 3) {
+        $("#colorChange").attr("class", "badge badge-success")
+    } else if (lastCity.uvIndex > 3 && lastCity.uvIndex < 8) {
+        $("#colorChange").attr("class", "badge badge-warning")
+    } else {
+        $("#colorChange").attr("class", "badge badge-danger")
+    }
+
+    for (var i = 1; i < 6; i++) {
 
 
+        var fiveImgTag = $("<img>");
+        var fiveImgUrl = "http://openweathermap.org/img/wn/" + lastCity.fiveDayForecast[i-1].icon + "@2x.png";
+        var postDate = (moment().add(i, 'day').format("L"));
+       
+
+
+        $("#" + i).html(postDate + "<br>" + "Tempeture: " + lastCity.fiveDayForecast[i-1].fiveDayTemp.toFixed(0) + "°" + "<br>" + "Humidity: " + lastCity.fiveDayForecast[i-1].humidity + "%" + "<br>");
+        fiveImgTag.attr("src", fiveImgUrl);
+        $("#" + i).append(fiveImgTag);
+
+
+    }
+
+    $(".fiveDay").addClass("card bg-primary text-white text-center p-3 data");
 
     $("#place").on("click", "li", function () {
 
