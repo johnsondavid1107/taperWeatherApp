@@ -129,7 +129,7 @@ $(document).ready(function () {
     $(".city").html("The last searched city was: " + "<br>" + lastCity.city + "<br>" +" on " + date);
 
 
-    $(".temp").text("Current Tempeture: " + lastCity.temperture.toFixed(0) + "°");
+    $(".temp").text("Current Temperture: " + lastCity.temperture.toFixed(0) + "°");
     $(".humidity").text("Humidity: " + lastCity.humidity + "%");
     $(".windS").text("Wind Speed: " + lastCity.windS + "m/s");
     $("#colorChange").text("UVI Index: " + lastCity.uvIndex)
@@ -151,7 +151,7 @@ $(document).ready(function () {
        
 
 
-        $("#" + i).html(postDate + "<br>" + "Tempeture: " + lastCity.fiveDayForecast[i-1].fiveDayTemp.toFixed(0) + "°" + "<br>" + "Humidity: " + lastCity.fiveDayForecast[i-1].humidity + "%" + "<br>");
+        $("#" + i).html(postDate + "<br>" + "Temperture: " + lastCity.fiveDayForecast[i-1].fiveDayTemp.toFixed(0) + "°" + "<br>" + "Humidity: " + lastCity.fiveDayForecast[i-1].humidity + "%" + "<br>");
         fiveImgTag.attr("src", fiveImgUrl);
         $("#" + i).append(fiveImgTag);
 
