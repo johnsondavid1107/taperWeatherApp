@@ -76,15 +76,15 @@ $(document).ready(function () {
                         var fiveDayIcon = response.daily[i].weather[0].icon;
                         var fiveImgTag = $("<img>");
                         var fiveImgUrl = "https://openweathermap.org/img/wn/" + fiveDayIcon + "@2x.png";
-                        date = (moment().add(i, 'day').format("L"));
+                        var fiveDayDate = (moment().add(i, 'day').format("L"));
 
 
-                        $("#" + i).html(date + "<br>" + "Tempeture: " + fiveDayTemp.toFixed(0) + "°" + "<br>" + "Humidity: " + response.daily[i].humidity + "%" + "<br>");
+                        $("#" + i).html(fiveDayDate + "<br>" + "Tempeture: " + fiveDayTemp.toFixed(0) + "°" + "<br>" + "Humidity: " + response.daily[i].humidity + "%" + "<br>");
                         fiveImgTag.attr("src", fiveImgUrl);
                         $("#" + i).append(fiveImgTag);
                         console.log(fiveImgUrl);
                         oneDayForecast.fiveDayTemp = fiveDayTemp
-                        oneDayForecast.date = date
+                        oneDayForecast.date = fiveDayDate
                         oneDayForecast.humidity = response.daily[i].humidity
                         oneDayForecast.icon = fiveDayIcon;
                         simplifiedFiveDayForecast.push(oneDayForecast);
@@ -101,7 +101,7 @@ $(document).ready(function () {
                     // console.log(response)
 
                     var history = {
-                        city: cityName.charAt(0).toUpperCase() + cityName.slice(1),
+                        city: cityName,
                         temperture: tempF,
                         humidity: humidity,
                         windS: windS,
@@ -197,6 +197,7 @@ $(document).ready(function () {
                 method: "GET"
             }).then(function (response) {
                 for (var i = 0; i < 5; i++) {
+                    console.log(response);
 
                     var fiveDayTemp = (response.daily[i].temp.max - 273.15) * 1.80 + 32;
                     var fiveDayIcon = response.daily[i].weather[0].icon;
