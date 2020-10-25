@@ -8,6 +8,7 @@ $(document).ready(function () {
     searchBtn.on("click", function process() {
 
         var cityName = $(".inputF").val();
+        cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
 
         var newEntry = ($(".inputF").val());
         var newLiItem = $("<li>");
@@ -100,7 +101,7 @@ $(document).ready(function () {
                     // console.log(response)
 
                     var history = {
-                        city: cityName,
+                        city: cityName.charAt(0).toUpperCase() + cityName.slice(1),
                         temperture: tempF,
                         humidity: humidity,
                         windS: windS,
@@ -126,6 +127,7 @@ $(document).ready(function () {
     console.log(lastCity);
 
     $(".city").html("The last searched city was: " + "<br>" + lastCity.city + "<br>" +" on " + date);
+
 
     $(".temp").text("Current Tempeture: " + lastCity.temperture.toFixed(0) + "°");
     $(".humidity").text("Humidity: " + lastCity.humidity + "%");
@@ -183,7 +185,7 @@ $(document).ready(function () {
             console.log(img);
             console.log(response);
 
-            $(".city").text(cityName + " " + " " + "(" + date + ")");
+            $(".city").text(cityName.charAt(0).toUpperCase() + cityName.slice(1)+ " " + " " + "(" + date + ")");
             $(".city").append(imgTag);
             $(".temp").text("Current Tempeture: " + tempF.toFixed(0) + "°");
             $(".humidity").text("Humidity: " + humidity + "%");
