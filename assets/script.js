@@ -126,7 +126,7 @@ $(document).ready(function () {
     var lastCity = JSON.parse(localStorage.getItem("History"));
     console.log(lastCity);
 
-    $(".city").html("The last searched city was: " + "<br>" + lastCity.city + "<br>" +" on " + date);
+    $(".city").html("The last searched city was: " + "<br>" + lastCity.city.charAt().toUpperCase() + lastCity.city.slice(1) + "<br>" +" on " + date);
 
 
     $(".temp").text("Current Temperture: " + lastCity.temperture.toFixed(0) + "°");
