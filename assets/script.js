@@ -18,7 +18,7 @@ $(document).ready(function () {
         $(".city").text(cityName + " " + " " + "(" + date + ")");
         console.log(date);
 
-        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + appID;
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + appID;
         $("input").val("");
 
         $.ajax({
@@ -30,7 +30,7 @@ $(document).ready(function () {
             var windS = response.wind.speed;
             var img = response.weather[0].icon;
             var imgTag = $("<img>");
-            var imgUrl = "http://openweathermap.org/img/wn/" + img + "@2x.png";
+            var imgUrl = "https://openweathermap.org/img/wn/" + img + "@2x.png";
             imgTag.attr("src", imgUrl);
             console.log(imgTag);
             console.log(img);
@@ -45,7 +45,7 @@ $(document).ready(function () {
 
             var lat = response.coord.lat;
             var lon = response.coord.lon;
-            var uviURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + appID;
+            var uviURL = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + appID;
 
             $.ajax({
                 url: uviURL,
@@ -74,7 +74,7 @@ $(document).ready(function () {
                         var fiveDayTemp = (response.daily[i].temp.max - 273.15) * 1.80 + 32;
                         var fiveDayIcon = response.daily[i].weather[0].icon;
                         var fiveImgTag = $("<img>");
-                        var fiveImgUrl = "http://openweathermap.org/img/wn/" + fiveDayIcon + "@2x.png";
+                        var fiveImgUrl = "https://openweathermap.org/img/wn/" + fiveDayIcon + "@2x.png";
                         date = (moment().add(i, 'day').format("L"));
 
 
@@ -144,7 +144,7 @@ $(document).ready(function () {
 
 
         var fiveImgTag = $("<img>");
-        var fiveImgUrl = "http://openweathermap.org/img/wn/" + lastCity.fiveDayForecast[i-1].icon + "@2x.png";
+        var fiveImgUrl = "https://openweathermap.org/img/wn/" + lastCity.fiveDayForecast[i-1].icon + "@2x.png";
         var postDate = (moment().add(i, 'day').format("L"));
        
 
@@ -163,7 +163,7 @@ $(document).ready(function () {
         console.log($(this).text())
         var cityName = $(this).text()
 
-        var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + appID;
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + appID;
 
 
         $.ajax({
@@ -177,7 +177,7 @@ $(document).ready(function () {
             var lat = response.coord.lat;
             var lon = response.coord.lon;
             var imgTag = $("<img>");
-            var imgUrl = "http://openweathermap.org/img/wn/" + img + "@2x.png";
+            var imgUrl = "https://openweathermap.org/img/wn/" + img + "@2x.png";
             imgTag.attr("src", imgUrl);
             console.log(imgTag);
             console.log(img);
@@ -199,7 +199,7 @@ $(document).ready(function () {
                     var fiveDayTemp = (response.daily[i].temp.max - 273.15) * 1.80 + 32;
                     var fiveDayIcon = response.daily[i].weather[0].icon;
                     var fiveImgTag = $("<img>");
-                    var fiveImgUrl = "http://openweathermap.org/img/wn/" + fiveDayIcon + "@2x.png";
+                    var fiveImgUrl = "https://openweathermap.org/img/wn/" + fiveDayIcon + "@2x.png";
                     date = (moment().add(i, 'day').format("L"));
 
 
